@@ -41,6 +41,6 @@ const TSchema = new Schema(
    }
 );
 
-let DataSet = models.TSchema || model<IUserModel | any>("Schema", TSchema);
+let DataSet = models.TSchema || model<any>("TSchema", TSchema);
 
 export default DataSet;
