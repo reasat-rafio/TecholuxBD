@@ -1,3 +1,4 @@
+$_lg_navlist: 13px;
 html,
 body {
    padding: 0;
@@ -19,4 +20,4 @@ a {
 }
 
 // Main Layout
-@import "../Components/Layout/NavLayout/mainNavbar";
+@import "../Components/NavBar/LergeNavbar/lgNav";
