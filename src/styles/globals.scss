@@ -1,4 +1,17 @@
 $_lg_navlist: 13px;
+$_box-shadow_light: 0 0 0 1px rgba(64, 87, 109, 0.07),
+   0 2px 12px rgba(53, 71, 90, 0.2);
+$_white: #eeeeee;
+$_lightBlue: #2bced6;
+$_lighestBlue: #2bcdd62d;
+$_darkBlue: #00adb5;
+$_lightBlack: #394359;
+$_lightestBlack: #393e469d;
+$_black: #222831;
+$_hoverGray: #95adbe3b;
+$_gradiets1: linear-gradient(45.34deg, #5b507a 5.66%, #9eadc8 94.35%);
+$_gradiets2: linear-gradient(45deg, #86fde8, #acb6e5);
+
 html,
 body {
    padding: 0;
@@ -18,6 +31,10 @@ a {
    padding: 0;
    box-sizing: border-box;
 }
+.muiBtn {
+   box-shadow: none !important;
+}
 
 // Main Layout
 @import "../Components/NavBar/LergeNavbar/lgNav";
+// DDCA7D - B88B4A - A27035 - 533E2D - 242331

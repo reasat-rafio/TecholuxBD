@@ -7,6 +7,7 @@ import {
    initialSearchbarState,
    searchReducer,
 } from "./reducers/searchbarReducer";
+import { initialUserState, userReducer } from "./reducers/userReducer";
 
 const Store = createContext<any>(null);
 
@@ -22,20 +23,20 @@ type Action = {
 type ProfileReducer = (state: any, action: Action) => any;
 
 export const GlobalState: React.FC<StoreProps> = ({ children }) => {
-   // const [searchState, searchDispatch] = useReducer(
-   //    searchReducer,
-   //    initialSearchbarState,
-   //    () => {
-   //       if (typeof window !== "undefined") {
-   //          const localData = localStorage.getItem("searchState");
-   //          return localData ? JSON.parse(localData) : initialSearchbarState;
-   //       }
-   //       return initialSearchbarState;
-   //    }
-   // );
-   // useEffect(() => {
-   //    localStorage.setItem("searchState", JSON.stringify(searchState));
-   // }, [searchState]);
+   const [userState, userDispatch] = useReducer(
+      userReducer,
+      initialUserState,
+      () => {
+         if (typeof window !== "undefined") {
+            const localData = localStorage.getItem("TxBDuserState");
+            return localData ? JSON.parse(localData) : initialUserState;
+         }
+         return initialUserState;
+      }
+   );
+   useEffect(() => {
+      localStorage.setItem("TxBDuserState", JSON.stringify(userState));
+   }, [userState]);
 
    const [searchState, searchDispatch] = useReducer(
       searchReducer,
@@ -54,6 +55,8 @@ export const GlobalState: React.FC<StoreProps> = ({ children }) => {
             snackbarDispatch,
             searchState,
             searchDispatch,
+            userState,
+            userDispatch,
          }}
       >
          {children}

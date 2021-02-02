@@ -2,20 +2,19 @@
 
 .navbar {
    font-family: Montserrat, sans-serif;
-   color: #ffffff;
+
    position: sticky;
    width: 100vw;
    top: 0;
-   color: black;
+   color: $_black;
    /* header */
    .header {
       position: relative;
       margin: auto;
       display: flex;
       align-items: center;
-      padding: 0.9rem 2rem;
+      padding: 0.5rem 2rem;
       z-index: 1;
-      border-bottom: solid gray;
       border-bottom: 1px solid rgba(64, 87, 109, 0.07);
       a {
          text-decoration: none;
@@ -27,14 +26,16 @@
       .menu-items {
          display: flex;
          align-items: center;
-      }
-      li {
-         padding: 0.5rem 1rem;
-         transition: background 0.3s ease-in-out;
-         cursor: pointer;
+         li {
+            padding: 0.5rem 1rem;
+            transition: background 0.3s ease-in-out;
+            cursor: pointer;
 
-         &:hover {
-            // background-color: #c0c0c0;
+            &:hover {
+               a {
+                  color: $_darkBlue;
+               }
+            }
          }
       }
    }
@@ -45,7 +46,7 @@
    }
    .dropdown-menu {
       position: absolute;
-      background: #122331;
+      background-color: white;
       width: 100%;
       top: 50px;
       left: 0;
@@ -69,17 +70,18 @@
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
-
+      transform: translateX(-100px);
       .content {
          position: absolute;
-         box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.75);
+         box-shadow: $_box-shadow_light;
+         background-color: white;
          padding: 1rem;
          display: grid;
          grid-template-columns: repeat(4, 1fr);
          gap: 1rem;
          max-width: 80vw !important;
          justify-content: space-between;
-         background: whitesmoke;
+         border-radius: 5px;
          overflow: hidden;
          .col {
             display: flex;
@@ -89,8 +91,8 @@
             .img-wrapper {
                display: block;
                position: relative;
-               width: 200px;
-               height: 100px;
+               width: 160px;
+               height: 80px;
                overflow: hidden;
                border-radius: 4px;
                &:hover {
@@ -124,7 +126,7 @@
                   border-radius: 4px;
                   font-size: $_lg_navlist;
                   &:hover {
-                     background-color: #c0c0c0;
+                     background-color: $_hoverGray;
                   }
                   a {
                      color: #000000;
@@ -158,9 +160,26 @@
    }
    .menu-searchSection {
       margin-left: auto;
-
-      input {
-         font-size: 12px;
+      .searchBar {
+         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.329) !important;
+         background-color: #fff !important;
+         border-radius: 4px;
+         max-width: 400px;
+         min-width: 350px;
+         transition: width 0.4s ease-in-out;
+         input {
+            font-size: 13px !important;
+         }
+      }
+   }
+   .formAction {
+      .cart {
+         margin: 0 5px;
+      }
+      .authBtn {
+         color: $_white;
+         // background: #394359;
+         background: #46afb9;
       }
    }
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import SearchBar from "material-ui-search-bar";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -13,37 +13,53 @@ import {
 interface SearchFieldProps {}
 
 export const SearchField: React.FC<SearchFieldProps> = ({}) => {
+   // Search Filter Items
+   const [searchFilter, setSearchFilter] = useState<any>();
+
    // This funtion will deside wether the dropdown is getting shown or not
    const [searchDropdown, setSearchDropdown] = useState<boolean>(false);
+
    // Global state
    const {
       searchState: { isLoading, filterProducts },
       searchDispatch,
    } = useCtx();
 
+   // Fetching the data for search
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            searchDispatch(srcLoadingStartAction());
+            // const { data } = await axios.get(
+            //    "https://jsonplaceholder.typicode.com/users",
+            //    {
+            //       params: {
+            //          username: filter || undefined,
+            //       },
+            //    }
+            // );
+            const { data } = await axios.get(
+               "https://jsonplaceholder.typicode.com/users"
+            );
+
+            searchDispatch(searchDataAction(data));
+            searchDispatch(srcLoadingEndAction());
+         } catch (error) {
+            console.log(error);
+         }
+      };
+
+      fetchData();
+   }, []);
+
    const searchAction = async (filter) => {
       try {
-         searchDispatch(srcLoadingStartAction());
-         console.log(filter);
-
          if (filter.length != 0) {
             setSearchDropdown(true);
          } else {
             setSearchDropdown(false);
          }
-
-         const { data } = await axios.get(
-            "https://jsonplaceholder.typicode.com/users",
-            {
-               params: {
-                  username: filter || undefined,
-                  // _limit: 5,
-               },
-            }
-         );
-
-         searchDispatch(searchDataAction(data));
-         searchDispatch(srcLoadingEndAction());
+         setSearchFilter(filter);
       } catch (error) {
          console.log(error);
       }
@@ -53,6 +69,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({}) => {
       <>
          <div>
             <SearchBar
+               className="searchBar"
                onChange={(e) => searchAction(e)}
                placeholder="Search the entire store here ..."
                cancelOnEscape={true}
@@ -64,18 +81,23 @@ export const SearchField: React.FC<SearchFieldProps> = ({}) => {
 
          {searchDropdown && (
             <ul className="dropdown-menu">
-               {filterProducts.map((p, i) => (
-                  <li key={i}>
-                     <Link href="#">
-                        <a className="menu-item">{p.username}</a>
-                     </Link>
-                  </li>
-               ))}
-               <li>
-                  <Link href="#">
-                     <a className="menu-item">Item 1</a>
-                  </Link>
-               </li>
+               {filterProducts
+                  .filter((val) => {
+                     if (
+                        val.username
+                           .toLowerCase()
+                           .includes(searchFilter.toLowerCase())
+                     ) {
+                        return val;
+                     }
+                  })
+                  .map((p, i) => (
+                     <li key={i}>
+                        <Link href="#">
+                           <a className="menu-item">{p.username}</a>
+                        </Link>
+                     </li>
+                  ))}
             </ul>
          )}
       </>

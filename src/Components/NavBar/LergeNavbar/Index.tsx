@@ -2,10 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { NavBarCategories } from "./Categories/NavBarCategories";
 import { SearchField } from "./SearchField/SearchField";
-import { DownArrow, NavCategories } from "./_Helper";
+import { NavCategories } from "./_Helper";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
+import { Badge, Button, IconButton } from "@material-ui/core";
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import { useCtx } from "../../../store";
+
 interface IndexProps {}
 
 const Index: React.FC<IndexProps> = ({}) => {
+   const {
+      userState: { isLoggedIn },
+   } = useCtx();
    return (
       <>
          <nav className="navbar">
@@ -19,7 +28,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                      layout="intrinsic"
                   />
                </a>
-
+               🚀
                <nav>
                   <ul className="menu-items">
                      <li>
@@ -27,62 +36,10 @@ const Index: React.FC<IndexProps> = ({}) => {
                            <a className="menu-item">Home</a>
                         </Link>
                      </li>
-                     {/* <li className="dropdown">
-               <Link href="#">
-                  <a className="menu-item">Dropdown Menu</a>
-               </Link>
 
-               <ul className="dropdown-menu">
-                  <li>
-                     <Link href="#">
-                        <a className="menu-item">Item 1</a>
-                     </Link>
-                  </li>
-                  <li>
-                     <Link href="#">
-                        <a className="menu-item">Item 2</a>
-                     </Link>
-                  </li>
-                  <li className="dropdown dropdown-right">
-                     <Link href="#">
-                        <a className="menu-item">
-                           Item 3<i className="fas fa-angle-right"></i>
-                        </a>
-                     </Link>
-
-                     <ul className="menu-right">
-                        <li>
-                           <a href="#" className="menu-item">
-                              Item 3.1
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" className="menu-item">
-                              Item 3.2
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" className="menu-item">
-                              Item 3.3
-                           </a>
-                        </li>
-                        <li>
-                           <a href="#" className="menu-item">
-                              Item 3.4
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li>
-                     <a href="#" className="menu-item">
-                        Item 4
-                     </a>
-                  </li>
-               </ul>
-            </li> */}
                      <li>
                         <a href="#" className="menu-item">
-                           Categories <DownArrow />
+                           Categories <ExpandMoreIcon fontSize="small" />
                         </a>
 
                         <div className="mega-menu">
@@ -96,7 +53,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                                           title={title}
                                           li={li}
                                           to={to}
-                                       ></NavBarCategories>
+                                       />
                                     </div>
                                  )
                               )}
@@ -109,13 +66,42 @@ const Index: React.FC<IndexProps> = ({}) => {
                            Contact Us
                         </a>
                      </li>
+                     <li>
+                        <a href="#" className="menu-item">
+                           Faqs
+                        </a>
+                     </li>
                   </ul>
                </nav>
                <section className="menu-searchSection dropdown">
                   <SearchField />
                </section>
+               <section className="formAction">
+                  <IconButton color="inherit" className="cart">
+                     <Badge badgeContent={1} color="primary">
+                        <ShoppingCartOutlinedIcon />
+                     </Badge>
+                  </IconButton>
+                  {isLoggedIn ? (
+                     <Button
+                        variant="contained"
+                        className="muiBtn authBtn"
+                        startIcon={<VpnKeyIcon fontSize="small" />}
+                     >
+                        Logout
+                     </Button>
+                  ) : (
+                     <Button
+                        variant="contained"
+                        className="muiBtn authBtn"
+                        startIcon={<VpnKeyIcon fontSize="small" />}
+                     >
+                        Login
+                     </Button>
+                  )}
+               </section>
             </header>
-         </nav>{" "}
+         </nav>
       </>
    );
 };
