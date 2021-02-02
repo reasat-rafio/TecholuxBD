@@ -13,6 +13,9 @@ import "../styles/globals.scss";
 import { GlobalState } from "../store/index";
 import { GlobalLayout } from "../Components/Layout/GlobalLayout";
 
+// auth
+import { Provider } from "next-auth/client";
+
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
    React.useEffect(() => {
       // Remove the server-side injected CSS.
@@ -26,6 +29,8 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       <>
          <Head>
             <title>My App</title>
+            <meta content="text/html;charset=utf-8" httpEquiv="Content-Type" />
+            <meta content="utf-8" httpEquiv="encoding" />
             <meta
                name="viewport"
                content="minimum-scale=1, initial-scale=1, width=device-width"
@@ -34,9 +39,11 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
          <ThemeProvider theme={theme}>
             <CssBaseline />
             <GlobalState>
-               <GlobalLayout>
-                  <Component {...pageProps} />
-               </GlobalLayout>
+               <Provider session={pageProps.session}>
+                  <GlobalLayout>
+                     <Component {...pageProps} />
+                  </GlobalLayout>
+               </Provider>
             </GlobalState>
          </ThemeProvider>
       </>

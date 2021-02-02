@@ -8,13 +8,22 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import { Badge, Button, IconButton } from "@material-ui/core";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { useCtx } from "../../../store";
+import { signIn, signOut, useSession } from "next-auth/client";
+import { useRouter } from "next/router";
 
 interface IndexProps {}
 
 const Index: React.FC<IndexProps> = ({}) => {
+   // store
    const {
       userState: { isLoggedIn },
    } = useCtx();
+
+   // auth session
+   const [session, loading] = useSession();
+
+   // router
+   const router = useRouter();
    return (
       <>
          <nav className="navbar">
@@ -82,18 +91,23 @@ const Index: React.FC<IndexProps> = ({}) => {
                         <ShoppingCartOutlinedIcon />
                      </Badge>
                   </IconButton>
-                  {isLoggedIn ? (
-                     <Button
-                        variant="contained"
-                        className="muiBtn authBtn"
-                        startIcon={<VpnKeyIcon fontSize="small" />}
-                     >
-                        Logout
-                     </Button>
+                  {session ? (
+                     <>
+                        <Button
+                           variant="contained"
+                           className="muiBtn authBtn"
+                           onClick={async () => await signOut()}
+                           startIcon={<VpnKeyIcon fontSize="small" />}
+                        >
+                           Logout
+                        </Button>
+                        <span>{session.user.name}</span>
+                     </>
                   ) : (
                      <Button
                         variant="contained"
                         className="muiBtn authBtn"
+                        onClick={() => router.push("/auth")}
                         startIcon={<VpnKeyIcon fontSize="small" />}
                      >
                         Login
