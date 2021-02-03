@@ -1,3 +1,3 @@
-export const userAction = () => {
-   return;
+export const userAction = (state) => {
+   return state;
 };
