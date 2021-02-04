@@ -11,6 +11,7 @@ import { useCtx } from "../../../store";
 import { signIn, signOut, useSession } from "next-auth/client";
 import { useRouter } from "next/router";
 import { logOutAaction } from "../../../store/actions/userAction";
+import { SidebarNav } from "../../SidebarNav/SidebarNav";
 
 interface IndexProps {}
 
@@ -127,6 +128,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                </section>
             </header>
          </nav>
+         {/* <SidebarNav /> */}
       </>
    );
 };

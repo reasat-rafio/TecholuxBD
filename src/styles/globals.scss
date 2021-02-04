@@ -14,11 +14,12 @@ $_gradiets2: linear-gradient(45deg, #86fde8, #acb6e5);
 
 html,
 body {
-   padding: 0;
    margin: 0;
+   padding: 0;
    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
       Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
    min-height: 100vh;
+   box-sizing: border-box;
 }
 
 a {
@@ -40,3 +41,6 @@ a {
 
 // Auth styling
 @import "../pages/auth/auth";
+
+// SidebarNav styling
+@import "../Components/SidebarNav/sidebarNav";
