@@ -18,7 +18,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 const RegisterUser = async (req: NextApiRequest, res: NextApiResponse) => {
    try {
       //  Getting the data from request body
-      const { name, email, password } = req.body;
+      const { username, email, password } = req.body;
 
       // Checking if this email used before or not
       const user = await User.findOne({ email });
@@ -31,7 +31,7 @@ const RegisterUser = async (req: NextApiRequest, res: NextApiResponse) => {
 
       // Creating a new User
       const newUser = await User.create({
-         name,
+         username,
          email,
          password,
       });

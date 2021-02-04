@@ -18,6 +18,7 @@ const Index: React.FC<IndexProps> = ({}) => {
    const {
       userState: { isLoggedIn },
    } = useCtx();
+   console.log(isLoggedIn);
 
    // auth session
    const [session, loading] = useSession();
@@ -37,7 +38,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                      layout="intrinsic"
                   />
                </a>
-               🚀
+
                <nav>
                   <ul className="menu-items">
                      <li>
@@ -91,7 +92,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                         <ShoppingCartOutlinedIcon />
                      </Badge>
                   </IconButton>
-                  {session ? (
+                  {isLoggedIn ? (
                      <>
                         <Button
                            variant="contained"
@@ -101,7 +102,6 @@ const Index: React.FC<IndexProps> = ({}) => {
                         >
                            Logout
                         </Button>
-                        <span>{session.user.name}</span>
                      </>
                   ) : (
                      <Button

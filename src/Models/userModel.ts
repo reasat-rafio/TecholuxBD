@@ -14,7 +14,7 @@ interface IUserModel extends Model<SavedUserDocument> {
 
 const userSchema = new Schema(
    {
-      name: {
+      username: {
          type: String,
          required: true,
       },

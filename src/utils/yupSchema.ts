@@ -12,7 +12,7 @@ export const LoginSchema = yup.object().shape({
 });
 
 export const RegisterSchema = yup.object().shape({
-   name: yup
+   username: yup
       .string()
       .min(2, "User name must be longer than 4 character")
       .max(15, "User name must be less than 15 character")

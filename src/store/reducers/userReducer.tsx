@@ -1,4 +1,4 @@
-import {} from "../types";
+import { USER_LOG_IN, USER_LOG_OUT } from "../types";
 
 type Action = {
    type: string;
@@ -11,9 +11,15 @@ export const initialUserState = {
 };
 export const userReducer = (state: any, action: Action) => {
    switch (action.type) {
-      case "asd":
-         return { ...state };
+      case USER_LOG_IN:
+         return { ...state, isLoggedIn: true, user: [action.payload] };
 
+      case USER_LOG_OUT:
+         return {
+            ...state,
+            isLoggedIn: false,
+            user: [],
+         };
       default:
          return state;
    }
