@@ -10,6 +10,7 @@ import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { useCtx } from "../../../store";
 import { signIn, signOut, useSession } from "next-auth/client";
 import { useRouter } from "next/router";
+import { logOutAaction } from "../../../store/actions/userAction";
 
 interface IndexProps {}
 
@@ -17,11 +18,21 @@ const Index: React.FC<IndexProps> = ({}) => {
    // store
    const {
       userState: { isLoggedIn },
+      userDispatch,
    } = useCtx();
-   console.log(isLoggedIn);
 
    // auth session
    const [session, loading] = useSession();
+
+   //Logout action
+
+   const LogoutAction = async () => {
+      if (session) {
+         await signOut();
+      } else {
+         userDispatch(logOutAaction());
+      }
+   };
 
    // router
    const router = useRouter();
@@ -97,7 +108,7 @@ const Index: React.FC<IndexProps> = ({}) => {
                         <Button
                            variant="contained"
                            className="muiBtn authBtn"
-                           onClick={async () => await signOut()}
+                           onClick={LogoutAction}
                            startIcon={<VpnKeyIcon fontSize="small" />}
                         >
                            Logout

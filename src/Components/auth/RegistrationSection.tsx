@@ -8,25 +8,66 @@ import { RegisterSchema } from "../../utils/yupSchema";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/client";
 import { FormStyles } from "../../utils/styles";
-import * as yup from "yup";
+import axios from "axios";
+import { useCtx } from "../../store";
+import { setSnackbar } from "../../store/actions/snackbarAction";
+import {
+   globalLoadingEndAction,
+   globalLoadingStartAction,
+} from "../../store/actions/searchbarAction";
+import { loginUserAction } from "../../store/actions/userAction";
+
 interface RegistrationSectionProps {}
+interface onSubmitInterface {
+   username: string;
+   email: string;
+   password: string;
+}
 
 export const RegistrationSection: React.FC<RegistrationSectionProps> = ({}) => {
    const classes = FormStyles();
    const router = useRouter();
 
+   // store
+   const { snackbarDispatch, searchDispatch, userDispatch } = useCtx();
+
    // Setting up Yup as useFrom resolver
    const { handleSubmit, register, errors } = useForm({
       resolver: yupResolver(RegisterSchema),
    });
+
+   //Social auth action
    const socialAuthenticationAction = async (platform: string) => {
       router.push("/");
       await signIn(platform);
    };
-   const onSignUpSubmit = async (data) => {
-      console.log(data);
+
+   // Form on submit
+   const onSignUpSubmit = async ({
+      username,
+      email,
+      password,
+   }: onSubmitInterface) => {
+      try {
+         searchDispatch(globalLoadingStartAction());
+         const { data } = await axios.post(`/api/auth/register`, {
+            username,
+            email,
+            password,
+         });
+
+         searchDispatch(globalLoadingEndAction());
+         userDispatch(loginUserAction(data.data));
+         router.push("/");
+         snackbarDispatch(
+            setSnackbar(true, "success", "Logged in successfully!")
+         );
+      } catch (error) {
+         snackbarDispatch(
+            setSnackbar(true, "error", `${error.response.data.error}`)
+         );
+      }
    };
-   console.log(errors);
 
    return (
       <form className="sign-up-form" onSubmit={handleSubmit(onSignUpSubmit)}>

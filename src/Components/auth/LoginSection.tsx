@@ -7,25 +7,60 @@ import { LoginSchema } from "../../utils/yupSchema";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/client";
 import { FormStyles } from "../../utils/styles";
+import { useCtx } from "../../store";
+import { setSnackbar } from "../../store/actions/snackbarAction";
+import {
+   globalLoadingEndAction,
+   globalLoadingStartAction,
+} from "../../store/actions/searchbarAction";
+import axios from "axios";
+import { loginUserAction } from "../../store/actions/userAction";
 
 interface LoginSectionProps {}
+interface onSubmitInterface {
+   email: string;
+   password: string;
+}
 
 export const LoginSection: React.FC<LoginSectionProps> = ({}) => {
    const classes = FormStyles();
    const router = useRouter();
+
+   // store
+   const { snackbarDispatch, searchDispatch, userDispatch } = useCtx();
+
    // Setting up Yup as useFrom resolver
    const { handleSubmit, register, errors } = useForm({
       resolver: yupResolver(LoginSchema),
    });
-   console.log(errors);
 
+   //Social auth action
    const socialAuthenticationAction = async (platform: string) => {
       router.push("/");
       await signIn(platform);
    };
 
-   const onSignInSubmit = async (data) => {
-      console.log(data);
+   // Form on submit
+   const onSignInSubmit = async ({ email, password }: onSubmitInterface) => {
+      try {
+         searchDispatch(globalLoadingStartAction());
+         const { data } = await axios.post(`/api/auth/login`, {
+            email,
+            password,
+         });
+         searchDispatch(globalLoadingEndAction());
+         userDispatch(loginUserAction(data.data));
+         console.log(data.data);
+
+         router.push("/");
+         snackbarDispatch(
+            setSnackbar(true, "success", "Logged in successfully!")
+         );
+      } catch (error) {
+         snackbarDispatch(
+            setSnackbar(true, "error", `${error.response.data.error}`)
+         );
+      }
    };
 
    return (
