@@ -36,6 +36,88 @@ a {
    box-shadow: none !important;
 }
 
+// .hover-img {
+//    border-radius: 5px;
+//    position: relative;
+//    transition: all 1s ease;
+//    max-height: 150px;
+//    width: 100%;
+//    .hover {
+//       position: absolute;
+//       background: red;
+//       z-index: 1212;
+//    }
+//    img {
+//       max-height: 150px;
+//       width: 100%;
+// background-repeat: no-repeat;
+// background-attachment: fixed;
+//       background-position: center;
+//    }
+// }
+
+.hover-img {
+   border-radius: 5px;
+   background-color: #000;
+   display: inline-block;
+   max-height: 200px;
+   overflow: hidden;
+   position: relative;
+   text-align: center;
+   width: 100%;
+   .figcaption {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+      opacity: 0;
+      z-index: 2;
+      transition-delay: 0.1s;
+   }
+   img {
+      vertical-align: top;
+      max-width: 100%;
+      backface-visibility: hidden;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+   }
+   &::before,
+   &::after {
+      background-color: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      content: "";
+      transition: all 0.4s ease-in-out;
+      z-index: 1;
+      opacity: 0;
+      transform: translate(-150%, -150%) rotate(1deg);
+   }
+}
+.hover-img * {
+   box-sizing: border-box;
+   transition: all 0.45s ease;
+}
+
+.hover-img .hover-img:hover:before,
+.hover-img:hover:after {
+   transform: scale(1);
+   opacity: 1;
+}
+
+.hover-img:hover > img {
+   opacity: 1;
+}
+
+.hover-img:hover .figcaption {
+   opacity: 0.12;
+}
+
 // Main Layout
 @import "../Components/NavBar/LergeNavbar/lgNav";
 

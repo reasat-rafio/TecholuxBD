@@ -12,6 +12,10 @@ const MyApp = () => {
             />
          </Head>
          <NavLayout>
+            <div className="hover-img">
+               <img src="/testcover.jpg" alt="" />
+               <div className="figcaption"></div>
+            </div>
             <div>
                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum
                tempore, itaque impedit vitae quam voluptate nihil adipisci ex
