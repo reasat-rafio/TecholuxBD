@@ -1,33 +1,82 @@
-import React from "react";
+import Link from "next/link";
+import WhatshotOutlinedIcon from "@material-ui/icons/WhatshotOutlined";
+import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
+import FlashOnOutlinedIcon from "@material-ui/icons/FlashOnOutlined";
+import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import VpnKeyOutlinedIcon from "@material-ui/icons/VpnKeyOutlined";
+import MeetingRoomOutlinedIcon from "@material-ui/icons/MeetingRoomOutlined";
+import { useRouter } from "next/router";
+
+import { useCtx } from "../../store";
 
 interface SidebarNavProps {}
 
 export const SidebarNav: React.FC<SidebarNavProps> = ({}) => {
+   const {
+      userState: { isLoggedIn },
+   } = useCtx();
+
+   const router = useRouter();
+   console.log(router);
+
    return (
       <section className="SidebarNav">
-         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil
-         incidunt quia fuga vel ut ipsa laudantium nisi enim voluptates
-         doloribus, consectetur, maxime unde voluptas! Ab enim praesentium
-         adipisci ratione vel obcaecati magnam dolorum dolore fugit minima nemo
-         itaque ut at libero, quidem doloribus aspernatur rerum eius, dolor
-         eveniet cupiditate sed eum. Nostrum fugit reprehenderit, et quisquam ex
-         voluptate nemo pariatur veniam corporis laudantium quaerat inventore,
-         obcaecati sit, suscipit ducimus laboriosam dignissimos velit mollitia
-         amet provident illum explicabo. Delectus sit cum dolorum culpa amet,
-         laudantium voluptas facilis deleniti eos cupiditate asperiores cumque
-         dolores aperiam nihil accusantium, provident unde! Voluptatum fuga amet
-         repellat quaerat nulla repellendus excepturi nemo voluptatibus? Tenetur
-         quas, non magni in veritatis sit quod iure nostrum nam aspernatur
-         magnam laudantium, exercitationem deserunt enim nihil itaque voluptas
-         ipsum est, quo voluptate mollitia maiores. Provident fugiat neque
-         deleniti natus ad minima, quaerat explicabo adipisci quos, iusto error
-         voluptas dicta doloremque consectetur, necessitatibus maxime ducimus
-         architecto maiores mollitia perferendis fugit. Perspiciatis quisquam in
-         harum minima corrupti omnis nostrum odit cupiditate illum modi! Dicta
-         maxime ipsum deleniti aut saepe incidunt assumenda, dolores, quis,
-         animi quod officiis voluptatem nulla quam vero autem cumque modi
-         inventore odio vel consequatur perspiciatis explicabo porro? Facere,
-         dignissimos tenetur!
+         <ul className="sidenav_ul">
+            <li
+               style={{
+                  background: `${router.pathname == "/" && "#95adbe3b"}`,
+               }}
+            >
+               <Link href="#">
+                  <a>
+                     <HomeOutlinedIcon className="icon" />
+                     <span>Recommended for you</span>
+                  </a>
+               </Link>
+            </li>
+            <li>
+               <Link href="#">
+                  <a>
+                     <FlashOnOutlinedIcon className="icon" />{" "}
+                     <span>Falash deals</span>
+                  </a>
+               </Link>
+            </li>
+            <li>
+               <Link href="#">
+                  <a>
+                     <WhatshotOutlinedIcon className="icon" />
+                     <span>Special deals</span>
+                  </a>
+               </Link>
+            </li>
+            <li>
+               <Link href="#">
+                  <a>
+                     <AddCircleOutlineOutlinedIcon className="icon" />
+                     <span>New arrivals</span>
+                  </a>
+               </Link>
+            </li>
+            {isLoggedIn ? (
+               <li>
+                  <Link href="#">
+                     <a>
+                        <MeetingRoomOutlinedIcon /> <span>Logout</span>
+                     </a>
+                  </Link>
+               </li>
+            ) : (
+               <li>
+                  <Link href="#">
+                     <a>
+                        <VpnKeyOutlinedIcon className="icon" />
+                        <span>Login / Register</span>
+                     </a>
+                  </Link>
+               </li>
+            )}
+         </ul>
       </section>
    );
 };

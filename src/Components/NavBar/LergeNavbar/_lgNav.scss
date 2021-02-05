@@ -2,10 +2,11 @@
 
 .navbar {
    font-family: Montserrat, sans-serif;
-
+   background-color: #fff;
    position: sticky;
    width: 100vw;
    top: 0;
+   z-index: 1000;
    color: $_black;
    /* header */
    .header {

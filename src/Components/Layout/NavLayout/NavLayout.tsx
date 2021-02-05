@@ -10,11 +10,11 @@ export const NavLayout: React.FC<NavLayoutProps> = ({ children }) => {
    return (
       <>
          <LgNav />
-         <Grid container>
-            <Grid item md={2}>
+         <Grid container style={{ padding: "10px" }}>
+            <Grid item lg={2} md={3} style={{ position: "relative" }}>
                <SidebarNav />
             </Grid>
-            <Grid item md={10}>
+            <Grid item lg={10} md={9}>
                {children}
             </Grid>
          </Grid>

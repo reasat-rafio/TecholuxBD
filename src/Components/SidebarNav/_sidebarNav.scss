@@ -1,2 +1,35 @@
 .SidebarNav {
+   position: fixed;
+   top: 0;
+   min-width: 16%;
+   margin-top: 100px;
+   height: 100vh;
+   overflow: auto;
+   .sidenav_ul {
+      padding: 5px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      li {
+         list-style: none;
+         margin-bottom: 7px;
+         font-weight: lighter;
+         border-radius: 4px;
+         &:hover {
+            background-color: $_hoverGray;
+         }
+         a {
+            padding: 7px 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            span {
+            }
+            .icon {
+               margin: 0 8px 0 6px;
+               font-size: 24px;
+            }
+         }
+      }
+   }
 }
